@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from blog.model import connector
+from app.model import connector
 
 
 app = FastAPI()
@@ -19,5 +19,3 @@ def on_app_start():
 @app.on_event("shutdown")
 def on_app_shutdown():
     print("서버가 종료되었습니다.")
-
-
