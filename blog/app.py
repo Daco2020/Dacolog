@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from app.models import connector
+from blog.model import connector
 
 
 app = FastAPI()

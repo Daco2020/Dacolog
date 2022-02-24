@@ -1,5 +1,5 @@
 import pymysql
-from app.config import DATABASE
+from blog.config import DATABASE
 
 class Connector():
     def __init__(self):
