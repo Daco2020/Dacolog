@@ -4,13 +4,8 @@ from apps.config import DATABASE
 
 class Connector:
     def __init__(self):
-        self.db = None
-        self.cursor = None
-
-    def connect(self):
         self.db = pymysql.connect(**DATABASE)
         self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
-        print("DB가 연결되었습니다.")
 
     # 단일 인서트
     def execute(self, query, args={}):
