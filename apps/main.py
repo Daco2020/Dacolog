@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from apps.service import logs
+from apps.api import blog
 
 
 app = FastAPI()
 
-app.include_router(logs.router)
+app.include_router(blog.router)
 
 
 @app.get("/")
