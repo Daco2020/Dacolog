@@ -4,6 +4,16 @@
 - SQL 학습을 위해 ORM 라리브러리는 사용하지 않습니다.
 
 <br>
+<br>
 
 ## 사용기술
 - FastAPI, MySQL
+
+<br>
+<br>
+
+
+## 진행상황(최신순)
+- api/blog - log가져오기 api 구현
+- api/blog - log작성 api 구현
+- api/blog - test code 작성
