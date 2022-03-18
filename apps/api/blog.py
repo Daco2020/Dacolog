@@ -1,6 +1,7 @@
-from fastapi import Request
+from fastapi import Request, APIRouter, status
 from apps.service.logs import LogHandler, LogItem
-from fastapi import APIRouter
+from fastapi.responses import JSONResponse
+from pymysql.err import IntegrityError
 
 
 router = APIRouter(
@@ -16,6 +17,14 @@ async def read_logs(request: Request, user_id: int):
 
 @router.post("/{user_id}/logs")
 async def create_logs(request: Request, user_id: int, log_item: LogItem):
-    content, category_id = log_item.content, log_item.category_id
-    result = LogHandler.insert([content, category_id])
-    return {"message": result}
+    try:
+        content, category_id = log_item.content, log_item.category_id
+        if LogHandler.insert([content, category_id]):
+            result = {"message": "success" }
+        return JSONResponse(status_code=status.HTTP_201_CREATED, content=result)
+    
+    except IntegrityError: 
+        result = {"message": "value error"}
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content=result)
+    
+        

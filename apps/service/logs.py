@@ -15,4 +15,4 @@ class LogHandler:
 
         db_class.execute(sql, args)
         db_class.commit()
-        return "success"
+        return True
