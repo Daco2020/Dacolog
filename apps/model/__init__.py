@@ -7,11 +7,11 @@ class Connector:
         self.db = pymysql.connect(**DATABASE)
         self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
 
-    # 단일 인서트
+    # 단일
     def execute(self, query, args={}):
         self.cursor.execute(query, args)
 
-    # 벌크 인서트(추가)
+    # 벌크
     def execute_many(self, query, args={}):
         self.cursor.executemany(query, args)
 
