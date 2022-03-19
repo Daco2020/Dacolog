@@ -1,5 +1,8 @@
+from unittest import TestCase
 from fastapi.testclient import TestClient
 from apps.main import app
+from unittest import TestCase
+
 
 client = TestClient(app)
 
@@ -53,3 +56,6 @@ def test_create_logs_unprocessable_entity():
             "content": "string",
         })
     assert response.status_code == 422
+    
+    
+
