@@ -14,14 +14,11 @@ class TestBlog(TestCase):
     def tearDown(self) -> None:
         LogHandler.delete(['Test'])
         
-    # test_read_logs
     def test_read_logs_all(self):
         response = client.get(f"/users/{1}/logs")
         self.assertEqual(response.status_code, 200)
         self.assertIsNotNone(response.text)
 
-
-    # test_create_logs
     def test_create_logs(self):
         response = client.post(
             f"/users/{1}/logs",
@@ -32,7 +29,6 @@ class TestBlog(TestCase):
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.json(), {"message": "success"})
 
-    def test_create_logs_category_id(self):
         response = client.post(
             f"/users/{1}/logs",
             json={
