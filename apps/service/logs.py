@@ -23,3 +23,11 @@ class LogHandler:
         sql = "SELECT * FROM logs ORDER BY created_at DESC LIMIT 100" 
         rows = db_class.execute_all(sql)
         return rows
+    
+    def delete(args):
+        db_class = Connector()
+        sql = "DELETE FROM logs WHERE content = %s"
+            
+        db_class.execute(sql, args)
+        db_class.commit()
+        return True
