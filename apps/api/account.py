@@ -11,11 +11,11 @@ router = APIRouter(
 
 def create_account(data):
     data[2] = bcrypt.hashpw(data[2].encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    if not AccountHandler.insert(data):
-        raise HTTPException(status_code=400, detail="Could not create account")
+    AccountHandler.insert(data)
+
     
 
-@router.post("/")
+@router.post("")
 async def signup(request: Request, account_signup_item: AccountSignupItem):
     try:
         name = account_signup_item.name
@@ -32,5 +32,5 @@ async def signup(request: Request, account_signup_item: AccountSignupItem):
         
         return JSONResponse(status_code=status.HTTP_201_CREATED, content={'message' : 'success'})
     
-    except HTTPException as error:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message' : error.detail})
+    except HTTPException as err:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message' : err.detail})

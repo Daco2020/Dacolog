@@ -3,7 +3,7 @@
 -- mysql -u root -p
 
 -- 데이터베이스 세팅 명령어
--- source /Users/daco/study/dacolog/apps/model/schema/setup_db.sql;
+-- source /Users/daco/study/dacolog/apps/model/schema/db_setup.sql;
 
 use dacolog;
 

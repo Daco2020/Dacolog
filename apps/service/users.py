@@ -23,4 +23,3 @@ class AccountHandler:
         sql = "SELECT * FROM users WHERE email=%s" 
         row = db_class.execute_one(sql, args)
         return row
-    
