@@ -17,7 +17,6 @@
 - api/account - 회원가입 API 구현
 - api/blog - log가져오기 API 구현
 - api/blog - log작성 API 구현
-- api/blog - test code 작성
 
 <br>
 <br>

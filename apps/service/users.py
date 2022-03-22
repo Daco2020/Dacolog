@@ -5,7 +5,11 @@ class AccountSignupItem(BaseModel):
     name : str
     email : str
     password : str
-    
+
+class AccountLoginItem(BaseModel):
+    email : str
+    password : str
+
 class AccountHandler:
     def insert(args):
         db_class = Connector()

@@ -70,7 +70,7 @@ class TestAccount(TestCase):
             })
 
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json()['message'], "success")
+        self.assertEqual(response.json()['message'], "Create an account")
 
     def test_singup_failure(self):
         response = client.post("/account",
@@ -108,3 +108,14 @@ class TestAccount(TestCase):
 
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json()['message'], "Email already exists")
+
+    def test_login_success(self):
+        self.test_singup_success()
+        response = client.post("/account/login",
+            json={
+                "email" : "test@test.com",
+                "password" : "1q2w3e4r"
+            })
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['message'], "success")

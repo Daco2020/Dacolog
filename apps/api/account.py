@@ -1,19 +1,16 @@
 import json, bcrypt, jwt
 from fastapi import Request, APIRouter, status, HTTPException
 from fastapi.responses import JSONResponse
-from apps.service.users import AccountSignupItem, AccountHandler
-from apps.api.util.validation import check_email_exists, check_email_regex, check_password_regex
+from apps.service.users import AccountLoginItem, AccountSignupItem
+from apps.api.util.account_functions import *
+from apps.api.util.validations import *
+
 
 
 router = APIRouter(
     prefix="/account"
 )
 
-def create_account(data):
-    data[2] = bcrypt.hashpw(data[2].encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    AccountHandler.insert(data)
-
-    
 
 @router.post("")
 async def signup(request: Request, account_signup_item: AccountSignupItem):
@@ -21,16 +18,29 @@ async def signup(request: Request, account_signup_item: AccountSignupItem):
         name = account_signup_item.name
         email = account_signup_item.email
         password = account_signup_item.password
-        
+        check_email_already_exists(email)
         check_email_regex(email)
-        check_email_exists(email)
-        check_password_regex(password) 
+        check_password_regex(password)
+        result = create_account([name, email, password])
         
-        data = [name, email, password]
+        return JSONResponse(status_code=status.HTTP_201_CREATED, content={'message' : result})
+    
+    except HTTPException as err:
+        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message' : err.detail})
 
-        create_account(data)
+
+@router.post("/login")
+async def login(request: Request, account_login_item: AccountLoginItem):
+    try:
+        email = account_login_item.email
+        password = account_login_item.password
+        user_object = lookup_user(email)
+        print(user_object)
         
-        return JSONResponse(status_code=status.HTTP_201_CREATED, content={'message' : 'success'})
+        check_account_match(password, user_object)
+        token = create_token(user_object)
+        
+        return JSONResponse(status_code=status.HTTP_200_OK, content={'message' : 'success', 'access_token' : token})
     
     except HTTPException as err:
         return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message' : err.detail})
