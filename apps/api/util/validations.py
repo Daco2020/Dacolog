@@ -16,5 +16,5 @@ def check_email_already_exists(email):
         raise HTTPException(status_code=400, detail="Email already exists")
     
 def check_account_match(password, user_object):
-    if not bcrypt.checkpw(password.encode('utf-8'), user_object['password'].encode('utf-8')):
+    if not user_object or not bcrypt.checkpw(password.encode('utf-8'), user_object['password'].encode('utf-8')):
         raise HTTPException(status_code=401, detail="Account does not match")

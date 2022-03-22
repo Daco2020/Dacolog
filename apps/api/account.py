@@ -35,12 +35,10 @@ async def login(request: Request, account_login_item: AccountLoginItem):
         email = account_login_item.email
         password = account_login_item.password
         user_object = lookup_user(email)
-        print(user_object)
-        
         check_account_match(password, user_object)
         token = create_token(user_object)
         
         return JSONResponse(status_code=status.HTTP_200_OK, content={'message' : 'success', 'access_token' : token})
     
     except HTTPException as err:
-        return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={'message' : err.detail})
+        return JSONResponse(status_code=status.HTTP_401_UNAUTHORIZED, content={'message' : err.detail})

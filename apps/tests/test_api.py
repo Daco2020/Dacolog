@@ -118,4 +118,23 @@ class TestAccount(TestCase):
             })
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['message'], "success")
+        self.assertIsNotNone(response.json()['access_token'])
+        
+    def test_login_failure(self):
+        response = client.post("/account/login",
+            json={
+                "email" : "test_failure@test.com",
+                "password" : "1q2w3e4r"
+            })
+
+        self.assertEqual(response.status_code, 401)
+        self.assertIsNotNone(response.json()['message'])
+        
+        response = client.post("/account/login",
+            json={
+                "email" : "test@test.com",
+                "password" : "1q2w3e4r_failure"
+            })
+
+        self.assertEqual(response.status_code, 401)
+        self.assertIsNotNone(response.json()['message'])

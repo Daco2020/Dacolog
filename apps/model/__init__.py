@@ -11,9 +11,9 @@ class Connector:
     def execute(self, query, args={}):
         self.cursor.execute(query, args)
 
-    # 벌크
-    def execute_many(self, query, args={}):
-        self.cursor.executemany(query, args)
+    # # 벌크
+    # def execute_many(self, query, args={}):
+    #     self.cursor.executemany(query, args)
 
     # 한번에 한 row
     def execute_one(self, query, args={}):
