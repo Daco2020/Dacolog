@@ -5,7 +5,6 @@ class CreateMockData:
         self.db_class = Connector()
         
     def read_categories(self):
-        
         sql = "SELECT * FROM categories WHERE name='Test category'" 
         row = self.db_class.execute_one(sql)
         return row
@@ -18,6 +17,12 @@ class CreateMockData:
     def setup_logs(self):
         id = self.read_categories()['id']
         sql = f"INSERT INTO logs( content, category_id ) VALUES ( 'Test', {id} )"
+        self.db_class.execute(sql)
+        self.db_class.commit()
+
+    def setup_users(self):
+        id = self.read_categories()['id']
+        sql = f"INSERT INTO users( name, email, password ) VALUES ( 'test_name', 'test@test.com', '1q2w3e4r' )"
         self.db_class.execute(sql)
         self.db_class.commit()
 

@@ -10,6 +10,11 @@ router = APIRouter(
 )
 
 
+@router.get("/")
+async def read_users(request: Request, category: int = 0, offset: int = 0, limit: int = 10):
+    pass
+
+
 @router.get("/{user_id}/logs")
 async def read_logs(request: Request, user_id: int):
     result = {"message": jsonable_encoder(LogHandler.select_all())}

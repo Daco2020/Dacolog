@@ -4,8 +4,9 @@ from fastapi.testclient import TestClient
 from apps.service.logs import LogHandler
 from apps.service.users import AccountHandler
 from apps.main import app
-from .setup_mock_db import CreateMockData
+from .mock_data import CreateMockData
 from apps.api.account import create_account
+
 
 client = TestClient(app)
 mock_data = CreateMockData()
@@ -52,6 +53,22 @@ class TestBlog(TestCase):
             json={
             })
         self.assertEqual(response.status_code, 422)
+        
+    def test_read_users_all(self):
+        response = client.get(f"/users/?category=0&offset=0&limit=0")
+        
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {"message": "Invalid limit"})
+
+        response = client.get(f"/users/?category=-1&offset=0&limit=10")
+        
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {"message": "Invalid category"})
+
+        response = client.get(f"/users/?category=0&offset=0&limit=10")
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {"message": "Success"})
 
 
 class TestAccount(TestCase):
